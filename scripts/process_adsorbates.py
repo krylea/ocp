@@ -71,7 +71,7 @@ def write_ads_to_lmdb(ads_dir, ads_num):
         r_fixed=True,
     )
 
-    traj_folder = os.path.join(ads_dir, ads_num+"_uncompressed")
+    traj_folder = os.path.join(ads_dir, str(ads_num)+"_uncompressed")
     ads_files = glob.glob(os.path.join(traj_folder, "*.extxyz"))
     for file in ads_files:
         system_id = int(re.findall(r'random([\d]*)', file)[0])
