@@ -24,7 +24,7 @@ def uncompress_data(compressed_dir):
     parser = uncompress.get_parser()
     args, _ = parser.parse_known_args()
     args.ipdir = compressed_dir
-    args.opdir = os.path.dirname(compressed_dir) + "_uncompressed"
+    args.opdir = compressed_dir + "_uncompressed"
     uncompress.main(args)
     return args.opdir
 
@@ -34,11 +34,6 @@ def download_ads(root_dir, ads_num):
     filename = os.path.join(root_dir, os.path.basename(download_link))
     logging.info("Extracting contents...")
     os.system(f"tar -xvf {filename} -C {root_dir}")
-    dirname = os.path.join(
-        root_dir,
-        os.path.basename(filename).split(".")[0],
-    )
-
 
 def read_trajectory_extract_features(a2g, traj_path):
     traj = ase.io.read(traj_path, ":")
@@ -103,7 +98,7 @@ def write_ads_to_lmdb(ads_dir, ads_num):
     db.close()
 
 
-def process_adsorbates(root_dir, N_ADS=81):
+def process_adsorbates(root_dir, N_ADS=82):
     os.makedirs(root_dir, exist_ok=True)
     for i in range(N_ADS):
         ads_dir = os.path.join(root_dir, str(i))
