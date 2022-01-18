@@ -20,7 +20,7 @@ import shutil
 ADS_DL_LINK = "https://dl.fbaipublicfiles.com/opencatalystproject/data/per_adsorbate_is2res/"
 
 def uncompress_data(compressed_dir):
-    import uncompress
+    import scripts.uncompress as uncompress
     parser = uncompress.get_parser()
     args, _ = parser.parse_known_args()
     args.ipdir = compressed_dir
