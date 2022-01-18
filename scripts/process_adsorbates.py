@@ -74,7 +74,7 @@ def write_ads_to_lmdb(root_dir, ads_num):
 
     traj_folder = os.path.join(root_dir, str(ads_num), str(ads_num)+"_uncompressed")
     ads_files = glob.glob(os.path.join(traj_folder, "*.extxyz"))
-    for file in tqdm.tqdm(ads_files):
+    for file in ads_files:
         system_id = int(re.findall(r'random([\d]*)', file)[0])
         ref_energy = ref_energies[system_id]
 
@@ -116,6 +116,7 @@ def process_adsorbates(root_dir, N_ADS=82):
 
         write_ads_to_lmdb(root_dir, i)
         shutil.rmtree(ads_dir)
+        logging.info("Finished adsorbate %d" % i)
 
 
 import argparse
