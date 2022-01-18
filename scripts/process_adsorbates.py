@@ -114,7 +114,7 @@ def process_adsorbates(root_dir, N_ADS=82):
             _ = uncompress_data(compressed_dir)
             shutil.rmtree(compressed_dir)
 
-        write_ads_to_lmdb(ads_dir, i)
+        write_ads_to_lmdb(root_dir, i)
         shutil.rmtree(ads_dir)
 
 
