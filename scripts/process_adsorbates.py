@@ -50,6 +50,7 @@ def write_ads_to_lmdb(ads_dir, ads_num):
     ref_energies = {}
     for line in system_data:
         id, energy = line.split(",")
+        id = int(re.findall(r'random([\d]*)', id)[0])
         ref_energies[int(id)] = float(energy)
     
     lmdb_path = os.path.join(ads_dir, str(ads_num) + ".lmdb")
