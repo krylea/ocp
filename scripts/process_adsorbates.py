@@ -105,7 +105,8 @@ def process_adsorbates(root_dir, N_ADS=82):
     os.makedirs(root_dir, exist_ok=True)
     for i in range(N_ADS):
         ads_dir = os.path.join(root_dir, str(i))
-        if not os.path.exists(ads_dir):
+        lmdb_path = os.path.join(root_dir, str(i)+".lmdb")
+        if not os.path.exists(ads_dir) and not os.path.exists(lmdb_path):
             download_ads(root_dir, i)
 
         compressed_dir = os.path.join(ads_dir, str(i))
@@ -114,7 +115,7 @@ def process_adsorbates(root_dir, N_ADS=82):
             _ = uncompress_data(compressed_dir)
             shutil.rmtree(compressed_dir)
 
-        if not os.path.exists(os.path.join(root_dir, str(i)+".lmdb")):
+        if not os.path.exists(lmdb_path):
             write_ads_to_lmdb(root_dir, i)
         if os.path.exists(ads_dir):
             shutil.rmtree(ads_dir)
