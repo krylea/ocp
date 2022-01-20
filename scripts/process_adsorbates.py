@@ -32,9 +32,12 @@ def download_ads(root_dir, ads_num):
     download_link = ADS_DL_LINK + str(ads_num) + ".tar"
     os.system(f"wget {download_link} -P {root_dir}")
     filename = os.path.join(root_dir, os.path.basename(download_link))
-    logging.info("Extracting contents...")
-    os.system(f"tar -xvf {filename} -C {root_dir}")
-    os.remove(filename)
+    if os.path.exists(filename):
+        logging.info("Extracting contents...")
+        os.system(f"tar -xvf {filename} -C {root_dir}")
+        os.remove(filename)
+        return True
+    return False
 
 def read_trajectory_extract_features(a2g, traj_path):
     traj = ase.io.read(traj_path, ":")
@@ -106,20 +109,26 @@ def process_adsorbates(root_dir, N_ADS=82):
     for i in range(N_ADS):
         ads_dir = os.path.join(root_dir, str(i))
         lmdb_path = os.path.join(root_dir, str(i)+".lmdb")
-        if not os.path.exists(ads_dir) and not os.path.exists(lmdb_path):
-            download_ads(root_dir, i)
 
-        compressed_dir = os.path.join(ads_dir, str(i))
-        uncompressed_dir = os.path.join(ads_dir, str(i) + "_uncompressed")
-        if os.path.exists(compressed_dir) and not os.path.exists(uncompressed_dir):
-            _ = uncompress_data(compressed_dir)
-            shutil.rmtree(compressed_dir)
+        cont = not os.path.exists(lmdb_path)
+        if not os.path.exists(ads_dir) and cont:
+            cont = download_ads(root_dir, i)
 
-        if not os.path.exists(lmdb_path):
-            write_ads_to_lmdb(root_dir, i)
-        if os.path.exists(ads_dir):
-            shutil.rmtree(ads_dir)
-        logging.info("Finished adsorbate %d" % i)
+        if cont:
+            compressed_dir = os.path.join(ads_dir, str(i))
+            uncompressed_dir = os.path.join(ads_dir, str(i) + "_uncompressed")
+            if os.path.exists(compressed_dir) and not os.path.exists(uncompressed_dir):
+                _ = uncompress_data(compressed_dir)
+                shutil.rmtree(compressed_dir)
+
+            if not os.path.exists(lmdb_path):
+                write_ads_to_lmdb(root_dir, i)
+            if os.path.exists(ads_dir):
+                shutil.rmtree(ads_dir)
+            logging.info("Finished adsorbate %d" % i)
+        else:
+            logging.info("Skipping adsorbate %d" % i)
+
 
 
 if __name__ == '__main__':
