@@ -122,12 +122,13 @@ def process_adsorbates(root_dir, N_ADS=82):
         logging.info("Finished adsorbate %d" % i)
 
 
-import argparse
+if __name__ == '__main__':
+    import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--root_dir', type=str, default="adsorbate-data")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--root_dir', type=str, default="adsorbate-data")
 
-args = parser.parse_args()
+    args = parser.parse_args()
 
-process_adsorbates(args.root_dir)
+    process_adsorbates(args.root_dir)
 
