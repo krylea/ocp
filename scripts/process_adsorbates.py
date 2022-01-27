@@ -54,9 +54,14 @@ def write_ads_to_lmdb(root_dir, ads_num):
         id = int(re.findall(r'random([\d]*)', id)[0])
         ref_energies[int(id)] = float(energy)
     
-    lmdb_path = os.path.join(root_dir, str(ads_num) + ".lmdb")
+    lmdb_path1 = os.path.join(root_dir, str(ads_num), str(ads_num) + ".lmdb")
+    lmdb_path2 = os.path.join(root_dir, str(ads_num) + ".lmdb")
+
+    if os.path.exists(lmdb_path1):
+        os.remove(lmdb_path1)
+
     db = lmdb.open(
-        lmdb_path,
+        lmdb_path1,
         map_size=1099511627776 * 2,
         subdir=False,
         meminit=False,
@@ -99,11 +104,14 @@ def write_ads_to_lmdb(root_dir, ads_num):
         txn.commit()
         db.sync()
     db.close()
+    os.system(f"mv {lmdb_path1} {lmdb_path2}")
+
 
 
 def process_adsorbates(root_dir, N_ADS=82):
     os.makedirs(root_dir, exist_ok=True)
     for i in range(N_ADS):
+        print(i)
         ads_dir = os.path.join(root_dir, str(i))
         lmdb_path = os.path.join(root_dir, str(i)+".lmdb")
 
