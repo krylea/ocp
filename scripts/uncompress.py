@@ -49,14 +49,14 @@ def main(args):
         fname_base = os.path.basename(i)
         ip_op_pairs.append((i, os.path.join(args.opdir, fname_base[:-3])))
 
-    pool = mp.Pool(args.num_workers)
-    list(
-        tqdm(
-            pool.imap(decompress_list_of_files, ip_op_pairs),
-            total=len(ip_op_pairs),
-            desc=f"Uncompressing {args.ipdir}",
+    with mp.Pool(args.num_workers) as pool:
+        list(
+            tqdm(
+                pool.imap(decompress_list_of_files, ip_op_pairs),
+                total=len(ip_op_pairs),
+                desc=f"Uncompressing {args.ipdir}",
+            )
         )
-    )
 
 
 if __name__ == "__main__":
