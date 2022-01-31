@@ -32,9 +32,10 @@ def download_ads(root_dir, ads_num):
     download_link = ADS_DL_LINK + str(ads_num) + ".tar"
     os.system(f"wget {download_link} -P {root_dir}")
     filename = os.path.join(root_dir, os.path.basename(download_link))
-    logging.info("Extracting contents...")
-    os.system(f"tar -xvf {filename} -C {root_dir}")
-    os.remove(filename)
+    if os.path.exists(filename):
+        logging.info("Extracting contents...")
+        os.system(f"tar -xvf {filename} -C {root_dir}")
+        os.remove(filename)
 
 def read_trajectory_extract_features(a2g, traj_path):
     traj = ase.io.read(traj_path, ":")
