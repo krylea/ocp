@@ -30,7 +30,8 @@ def write_lmdbs(target_path, files):
     for lmdb_file in files:
         in_db = lmdb.open(
             lmdb_file,
-            readonly=True
+            readonly=True,
+            subdir=False
         )
         with out_db.begin(write=True) as write_txn:
             with in_db.begin() as read_txn:
