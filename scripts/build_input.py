@@ -58,7 +58,7 @@ if __name__ == '__main__':
     val_files = ads_files[N_train:N_train + N_val]
     test_files = ads_files[N_train+N_val:]
 
-    dirname = datetime.datetime.now().strftime("%Y-%m-%d-%h")
+    dirname = datetime.datetime.now().strftime("%Y-%m-%d-%H")
     outdir = os.path.join(args.out_dir, dirname)
     if not os.path.exists(outdir):
         os.makedirs(outdir)
