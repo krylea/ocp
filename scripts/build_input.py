@@ -5,6 +5,7 @@ import random
 import re
 import datetime
 import lmdb
+import tqdm
 
 def parse_args():
     parser = ArgumentParser()
@@ -27,7 +28,7 @@ def write_lmdbs(target_path, files):
         meminit=False,
         map_async=True,
     )
-    for lmdb_file in files:
+    for lmdb_file in tqdm.tqdm(files):
         in_db = lmdb.open(
             lmdb_file,
             readonly=True,
