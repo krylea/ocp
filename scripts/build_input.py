@@ -28,6 +28,7 @@ def write_lmdbs(target_path, files):
         meminit=False,
         map_async=True,
     )
+    count=0
     for lmdb_file in tqdm.tqdm(files):
         in_db = lmdb.open(
             lmdb_file,
@@ -37,8 +38,9 @@ def write_lmdbs(target_path, files):
         with out_db.begin(write=True) as write_txn:
             with in_db.begin() as read_txn:
                 cursor = read_txn.cursor()
-                for key,value in cursor:
-                    write_txn.put(key, value)
+                for _,value in cursor:
+                    write_txn.put(count, value)
+                    count += 1
         in_db.close()
         out_db.sync()
     out_db.close()
