@@ -71,9 +71,9 @@ if __name__ == '__main__':
 
     train_indices, val_indices, test_indices = get_indices(train_files), get_indices(val_files), get_indices(test_files)
     with open(os.path.join(outdir, "indices.txt"), 'w') as outfile:
-        outfile.write("train: " + ",".join(train_indices) + "\n")
-        outfile.write("val: " + ",".join(val_indices) + "\n")
-        outfile.write("test: " + ",".join(test_indices) + "\n")
+        outfile.write("train: " + ",".join([str(i) for i in train_indices]) + "\n")
+        outfile.write("val: " + ",".join([str(i) for i in val_indices]) + "\n")
+        outfile.write("test: " + ",".join([str(i) for i in test_indices]) + "\n")
 
 
 
