@@ -46,7 +46,7 @@ def write_lmdbs(target_path, files):
 if __name__ == '__main__':
     args = parse_args()
 
-    ads_files = glob.glob(os.path.join(args.basedir, "*.lmdb"))
+    ads_files = glob.glob(os.path.join(args.data_dir, "*.lmdb"))
     N = len(ads_files)
     N_val = int(args.val_frac * N)
     N_test = int(args.test_frac * N)
