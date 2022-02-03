@@ -40,7 +40,7 @@ def write_lmdbs(target_path, files):
             with in_db.begin() as read_txn:
                 cursor = read_txn.cursor()
                 for _,value in cursor:
-                    write_txn.put(count, value)
+                    write_txn.put(f"{count}".encode("ascii"), value)
                     count += 1
         in_db.close()
         out_db.sync()
