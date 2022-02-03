@@ -38,9 +38,9 @@ def write_lmdbs(target_path, files):
                 cursor = read_txn.cursor()
                 for key,value in cursor:
                     write_txn.put(key, value)
-            write_txn.commit()
+                write_txn.commit()
         in_db.close()
-        out_db.sync()
+    out_db.sync()
     out_db.close()
 
 
