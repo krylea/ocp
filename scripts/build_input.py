@@ -9,6 +9,7 @@ import tqdm
 
 def parse_args():
     parser = ArgumentParser()
+    parser.add_argument("input_name")
     parser.add_argument("--data_dir", type=str, default="adsorbate-data/all-adsorbates")
     parser.add_argument("--out_dir", type=str, default="adsorbate-data/inputs")
     parser.add_argument("--val_frac", type=float, default=0.2)
@@ -60,8 +61,7 @@ if __name__ == '__main__':
     val_files = ads_files[N_train:N_train + N_val]
     test_files = ads_files[N_train+N_val:]
 
-    dirname = datetime.datetime.now().strftime("%Y-%m-%d-%H")
-    outdir = os.path.join(args.out_dir, dirname)
+    outdir = os.path.join(args.out_dir, args.input_name)
     if not os.path.exists(outdir):
         os.makedirs(outdir)
 
