@@ -52,10 +52,10 @@ if __name__ == '__main__':
     N_test = int(args.test_frac * N)
     N_train = N-N_val-N_test
 
-    shuffled_files=random.shuffle(ads_files)
-    train_files = shuffled_files[:N_train]
-    val_files = shuffled_files[N_train:N_train + N_val]
-    test_files = shuffled_files[N_train+N_val:]
+    random.shuffle(ads_files)
+    train_files = ads_files[:N_train]
+    val_files = ads_files[N_train:N_train + N_val]
+    test_files = ads_files[N_train+N_val:]
 
     dirname = datetime.datetime.now().strftime("%Y-%m-%d-%h")
     outdir = os.path.join(args.out_dir, dirname)
